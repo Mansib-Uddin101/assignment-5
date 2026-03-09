@@ -1,12 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<body>
-    hel
+    <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" /> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Geist', sans-serif;
+        }
+    </style>
+</head>
+<header class="flex items-center justify-between px-20 py-5 border-b border-slate-200 bg-white">
+    <div class="flex items-center gap-2">
+        <img class="w-12 h-12" src="assets/github-logo.png" alt="">
+        <h1 class="text-3xl font-semibold">GitHub Issues Tracker</h1>
+    </div>
+    <div>
+        <input class=" px-4 py-2 border border-slate-400 rounded-lg
+             focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" type="text"
+            placeholder="Search Issues">
+        <button id="search"
+            class="bg-[#4A00FF] hover:bg-blue-800 active:bg-blue-900 text-white font-medium py-3 px-4 rounded-lg transition-colors mt-2">Search</button>
+    </div>
+</header>
+
+<body class="bg-[#F8FAFC]">
+    <section class="mt-15 w-5/6 mx-auto bg-white rounded-lg p-6">
+        <button class="py-3 px-12 border border-slate-200 rounded">All</button>
+        <button class="py-3 px-12 border border-slate-200 rounded">Open</button>
+        <button class="py-3 px-12 border border-slate-200 rounded">Closed</button>
+    </section>
+
+    <section class="mt-4 w-5/6 mx-auto bg-white rounded-lg p-6 flex justify-between border-b border-slate-200">
+        <div class="flex gap-2">
+            <div>
+                <img class="w-12 h-12" src="assets/Aperture.png" alt="">
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold"><span>50</span> Issues</h3>
+                <p class="text-[#64748B]">Track and magange your project issues</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1">
+                <div class="h-3 w-3 rounded-full bg-[#00A96E]"></div>
+                <h3 class="font-medium">Open</h3>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="h-3 w-3 rounded-full bg-[#A855F7]"></div>
+                <h3 class="font-medium">Closed</h3>
+            </div>
+        </div>
+    </section>
+
+    <section></section>
 </body>
+
 </html>
