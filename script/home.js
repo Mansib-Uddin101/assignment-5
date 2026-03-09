@@ -31,6 +31,8 @@ const labelStyles = {
     enhancement: "bg-emerald-50 text-[#10B981]",
     default: "bg-slate-100 text-slate-600"
 };
+const amountIssues = document.getElementById("amountIssues")
+
 function renderIssues() {
     const cardContainer = document.getElementById("issuesContainer");
     cardContainer.innerHTML = '';
@@ -76,7 +78,7 @@ function renderIssues() {
         `;
         cardContainer.appendChild(div);
     });
-
+    amountIssues.innerText = cardContainer.children.length;
 }
 loadIssues()
 
@@ -141,3 +143,16 @@ function closeModal() {
     modal.classList.add("hidden");
     modal.classList.remove("flex");
 }
+
+const searchButton = document.getElementById("search");
+const searchInput = document.getElementById("searchInput");
+
+searchButton.addEventListener("click", function() {
+    const query = searchInput.value;
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${query}`)
+        .then((res) => res.json())
+        .then((json) => {
+            allIssues = json.data;
+            renderIssues();
+        });
+});
