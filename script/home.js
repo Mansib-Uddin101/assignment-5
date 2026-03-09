@@ -8,6 +8,8 @@ const loadIssues = () => {
             renderIssues();
         });
 };
+const active = ["bg-blue-500", "text-white"]
+const inactive = ["bg-white", "text-black"]
 
 const priorityStyles = {
     high: {
@@ -40,6 +42,8 @@ function renderIssues() {
     filteredIssues.forEach(issue => {
         const style = priorityStyles[issue.priority] || priorityStyles.low;
         const div = document.createElement('div');
+        div.className = "cursor-pointer";
+        div.onclick = () => showModal(issue);
         div.innerHTML = `
         <div class="bg-white h-full shadow-md border-t-4 p-4 rounded-lg flex flex-col gap-3 ${issue.status === 'open' ? 'border-green-500' : 'border-purple-700'}">
             <div class="flex items-center justify-between">
@@ -76,8 +80,18 @@ function renderIssues() {
 }
 loadIssues()
 
+const updateTabUI = (clickedElement) => {
+    const tabs = document.querySelectorAll(".tabBtn"); 
+    tabs.forEach(tab => {
+        tab.classList.remove(...active);
+        tab.classList.add(...inactive);
+    });
+    clickedElement.classList.add(...active);
+    clickedElement.classList.remove(...inactive);
+};
 document.getElementById("tabs").addEventListener("click", function (event) {
-    const clickedElement = event.target;
+    const clickedElement = event.target.closest("button");
+    if (!clickedElement) return
 
     if (clickedElement.classList.contains("all")) {
         currentTab = "all";
@@ -91,5 +105,39 @@ document.getElementById("tabs").addEventListener("click", function (event) {
         currentTab = "closed";
 
     }
+    updateTabUI(clickedElement);
     renderIssues();
 })
+
+function showModal(issue) {
+    const modal = document.getElementById("issueModal");
+    document.getElementById("modalTitle").innerText = issue.title;
+    document.getElementById("modalAuthor").innerText = issue.author;
+    document.getElementById("modalDescription").innerText = issue.description;
+    document.getElementById("modalAssignee").innerText = issue.assignee || "Unassigned";
+    document.getElementById("modalDate").innerText = new Date(issue.createdAt).toLocaleDateString();
+
+    const statusEl = document.getElementById("modalStatus");
+    statusEl.innerText = issue.status.charAt(0).toUpperCase() + issue.status.slice(1);
+    statusEl.className = `px-4 py-1 rounded-full text-white font-semibold text-sm ${issue.status === 'open' ? 'bg-[#00AC69]' : 'bg-purple-600'}`;
+
+    const prioElement = document.getElementById("modalPriority");
+    const style = priorityStyles[issue.priority] || priorityStyles.low;
+    prioElement.innerText = issue.priority.toUpperCase();
+    prioElement.className = `inline-block px-6 py-1 rounded-full font-bold text-xs tracking-widest ${style.badge}`;
+
+    const labelContainer = document.getElementById("modalLabels");
+    labelContainer.innerHTML = issue.labels.map(label => {
+        const colorClass = labelStyles[label.toLowerCase()] || labelStyles.default;
+        return `<span class="px-3 py-1 rounded-full font-bold uppercase border border-current ${colorClass}">${label}</span>`;
+    }).join('');
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+}
+
+function closeModal() {
+    const modal = document.getElementById("issueModal");
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+}
